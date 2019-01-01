@@ -357,6 +357,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/01/01/Github-Hexo-Mac博客部署指南/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/blog/2019/01/01/Github-Hexo-Mac博客部署指南/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -516,6 +526,14 @@ RSA key fingerprint is xxxxxx Are you sure you want to continue connecting (yes/
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
 
   
 
@@ -774,6 +792,48 @@ RSA key fingerprint is xxxxxx Are you sure you want to continue connecting (yes/
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+    
+    <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+    <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+  
+<!-- END LOCAL -->
+
+  
+    <style>
+      a.gitment-editor-footer-tip { display: none; }
+      .gitment-container.gitment-footer-container { display: none; }
+    </style>
+  
+
+  
+    <script>
+    function renderGitment(){
+      var gitment = new Gitmint({
+        id: window.location.pathname,
+        owner: 'thingsjar',
+        repo: 'gitment-comments# MUST HAVE, The name of the repo you use to store Gitment comments',
+        
+        lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+        
+        oauth: {
+        
+        
+          client_secret: 'e1f9c17d21139d9ef739f2868ee9d550985235a9# EITHER this or proxy_gateway, Github access secret token for the Gitment',
+        
+          client_id: '77b0cc0c95828ecd2aa8# MUST HAVE, Github client id for the Gitment'
+        }});
+      gitment.render('gitment-container');
+    }
+
+    
+      renderGitment();
+    
+    </script>
+  
 
 
 
