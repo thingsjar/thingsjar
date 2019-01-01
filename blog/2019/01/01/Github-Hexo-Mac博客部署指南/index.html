@@ -530,7 +530,8 @@ RSA key fingerprint is xxxxxx Are you sure you want to continue connecting (yes/
   
     <div class="comments" id="comments">
       
-        <div id="gitment-container"></div>
+        <div onclick="showGitment()" id="gitment-display-button">Show comments from Gitment</div>
+        <div id="gitment-container" style="display:none"></div>
       
     </div>
 
@@ -830,7 +831,11 @@ RSA key fingerprint is xxxxxx Are you sure you want to continue connecting (yes/
     }
 
     
-      renderGitment();
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
     
     </script>
   
