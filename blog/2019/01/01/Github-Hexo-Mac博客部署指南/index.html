@@ -108,17 +108,17 @@
 
 
 
-  <meta name="description" content="引用  使用Hexo搭建GitHub博客（2018年Mac版）作者：Wavky 【2018更新】小白独立搭建博客–Github Pages和Hexo简明教程  Hexo 配置安装nvm$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash 或者 $ wget -qO- https:">
+  <meta name="description" content="Hexo 配置安装nvm$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash 或者 $ wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash nvm官方文档 安装">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Github+Hexo+Mac 博客部署指南">
 <meta property="og:url" content="https://www.thingsjar.com/blog/2019/01/01/Github-Hexo-Mac博客部署指南/index.html">
 <meta property="og:site_name" content="Thingsjar">
-<meta property="og:description" content="引用  使用Hexo搭建GitHub博客（2018年Mac版）作者：Wavky 【2018更新】小白独立搭建博客–Github Pages和Hexo简明教程  Hexo 配置安装nvm$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash 或者 $ wget -qO- https:">
+<meta property="og:description" content="Hexo 配置安装nvm$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash 或者 $ wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash nvm官方文档 安装">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-01T21:24:22.675Z">
+<meta property="og:updated_time" content="2019-01-13T19:58:25.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Github+Hexo+Mac 博客部署指南">
-<meta name="twitter:description" content="引用  使用Hexo搭建GitHub博客（2018年Mac版）作者：Wavky 【2018更新】小白独立搭建博客–Github Pages和Hexo简明教程  Hexo 配置安装nvm$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash 或者 $ wget -qO- https:">
+<meta name="twitter:description" content="Hexo 配置安装nvm$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash 或者 $ wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash nvm官方文档 安装">
 
 
 
@@ -351,12 +351,24 @@
                 
               
 
-              <time title="Created: 2019-01-01 21:36:56 / Modified: 22:24:22" itemprop="dateCreated datePublished" datetime="2019-01-01T21:36:56+01:00">2019-01-01</time>
+              <time title="Created: 2019-01-01 21:36:56" itemprop="dateCreated datePublished" datetime="2019-01-01T21:36:56+01:00">2019-01-01</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-01-13 20:58:25" itemprop="dateModified" datetime="2019-01-13T20:58:25+01:00">2019-01-13</time>
               
             
           </span>
@@ -399,12 +411,7 @@
       
 
       
-        <p><em>引用</em></p>
-<ul>
-<li><a href="https://www.jianshu.com/p/cb0750324e26" target="_blank" rel="noopener"><em>使用Hexo搭建GitHub博客（2018年Mac版）作者：Wavky</em></a></li>
-<li><a href="https://my.oschina.net/ryaneLee/blog/638440" target="_blank" rel="noopener"><em>【2018更新】小白独立搭建博客–Github Pages和Hexo简明教程</em></a></li>
-</ul>
-<h3 id="Hexo-配置"><a href="#Hexo-配置" class="headerlink" title="Hexo 配置"></a>Hexo 配置</h3><h4 id="安装nvm"><a href="#安装nvm" class="headerlink" title="安装nvm"></a>安装nvm</h4><p><code>$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash</code></p>
+        <h3 id="Hexo-配置"><a href="#Hexo-配置" class="headerlink" title="Hexo 配置"></a>Hexo 配置</h3><h4 id="安装nvm"><a href="#安装nvm" class="headerlink" title="安装nvm"></a>安装nvm</h4><p><code>$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash</code></p>
 <p>或者</p>
 <p><code>$ wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash</code></p>
 <p><a href="https://github.com/creationix/nvm#install-script" target="_blank" rel="noopener">nvm官方文档</a></p>
@@ -491,6 +498,11 @@ RSA key fingerprint is xxxxxx Are you sure you want to continue connecting (yes/
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 在source目录下</span><br><span class="line">echo story.wavky.com &gt; CNAME</span><br></pre></td></tr></table></figure>
 <p>清理Hexo缓存并重新生成发布</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
+<p><em>引用</em></p>
+<ul>
+<li><a href="https://www.jianshu.com/p/cb0750324e26" target="_blank" rel="noopener"><em>使用Hexo搭建GitHub博客（2018年Mac版）作者：Wavky</em></a></li>
+<li><a href="https://my.oschina.net/ryaneLee/blog/638440" target="_blank" rel="noopener"><em>【2018更新】小白独立搭建博客–Github Pages和Hexo简明教程</em></a></li>
+</ul>
 
       
     </div>
