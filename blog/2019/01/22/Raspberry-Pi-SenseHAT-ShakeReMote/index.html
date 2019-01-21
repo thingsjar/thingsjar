@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2788491084128109",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-jar.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-jar.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-jar.ico?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/favicon-32x32-jar.ico?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Raspberry Pi + SenseHAT = ShakeReMote1. IntroNowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices,">
+<meta name="keywords" content="raspberry pi, sense hat, smart home, remote, hassio, home assistant, websocket, meross, phillip hue, webhook, ifttt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Raspberry Pi + SenseHAT = ShakeReMote">
+<meta property="og:url" content="https://www.thingsjar.com/blog/2019/01/22/Raspberry-Pi-SenseHAT-ShakeReMote/index.html">
+<meta property="og:site_name" content="Thingsjar">
+<meta property="og:description" content="Raspberry Pi + SenseHAT = ShakeReMote1. IntroNowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices,">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-21T23:36:11.216Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Raspberry Pi + SenseHAT = ShakeReMote">
+<meta name="twitter:description" content="Raspberry Pi + SenseHAT = ShakeReMote1. IntroNowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices,">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.thingsjar.com/blog/2019/01/22/Raspberry-Pi-SenseHAT-ShakeReMote/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Raspberry Pi + SenseHAT = ShakeReMote | Thingsjar</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132353752-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-132353752-1');
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Thingsjar</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.thingsjar.com/blog/2019/01/22/Raspberry-Pi-SenseHAT-ShakeReMote/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Thingsjar">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thingsjar">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Raspberry Pi + SenseHAT = ShakeReMote
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-01-22 00:32:55 / Modified: 00:36:11" itemprop="dateCreated datePublished" datetime="2019-01-22T00:32:55+01:00">2019-01-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/01/22/Raspberry-Pi-SenseHAT-ShakeReMote/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/blog/2019/01/22/Raspberry-Pi-SenseHAT-ShakeReMote/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Raspberry-Pi-SenseHAT-ShakeReMote"><a href="#Raspberry-Pi-SenseHAT-ShakeReMote" class="headerlink" title="Raspberry Pi + SenseHAT = ShakeReMote"></a>Raspberry Pi + SenseHAT = ShakeReMote</h1><h2 id="1-Intro"><a href="#1-Intro" class="headerlink" title="1. Intro"></a>1. Intro</h2><p>Nowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices, such as a cleaning robot with voice. In the meanwhile, you can know the room temperature and humidity in every room using different sensors. In the near future, there won’t be any physical switches, because every devices in your home can see, hear, learn and control themselves. And based on the automation, your home life will be more convenient, energy saving and efficient.</p>
+<p>Using a Raspberry Pi and a SenseHat, I made a prototype of an interesting device, with which you can control your smart devices with a shake. It has an advantage over voice control with Alexa, especially when you cannot talk. The LED array shows the device you can control. You can personalise them by changing it with the picture you like. This remote control can recognise how hard you’ve shaked it. If you shake it lightly, it turn on or off the device you choose, or change the colour of the light. If you shake it hardly, it will start a party mode by playing you music, turning on all color lights, and showing a spining wein glass with changing colors on the display. The color of the led changes simutaniously with the color of your light stripe.</p>
+<p>Now, lets take a look how it looks like.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6SWA7YpuF9c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+<h2 id="2-What-do-you-need-for-that"><a href="#2-What-do-you-need-for-that" class="headerlink" title="2. What do you need for that:"></a>2. What do you need for that:</h2><p>First of all, you need a raspberry pi as a home assistant server (lets name it Server Pi) and you can connect your smart devices to the server. I used the hassio system, which has a user friendly frontend and you can add your devices and realise the automation functions with script easily. It‘s a platform, which allows many different components, so that you don’t have to worry about the compatibility of your device.</p>
+<p>The hassio system also exposes an http API to the user. And this enables us to connect to the home assistant server and control the devices using another raspberry pi (It will be refered to as Remote Pi). To make the remote control more interesting, we add a SenseHAT to it. The senseHat is equiped with acceleration sensors and a 8x8 led array, which will be used in this project.</p>
+<h2 id="3-Connection-between-Remote-Pi-and-Server-Pi"><a href="#3-Connection-between-Remote-Pi-and-Server-Pi" class="headerlink" title="3. Connection between Remote Pi and Server Pi"></a>3. Connection between Remote Pi and Server Pi</h2><p>To send the control orders from remote to server and get the status of devices from server to remote, we need a two way connection between them. There are different way to do that, such as MQTT, http and websocket. In this project, i chose WebSocket, because its a bi-direction channel. </p>
+<p>To enable the conenction, first of all, you need an authentication to connect your application (the remote) to the server.  The home assistsant adopted the <a href="https://tools.ietf.org/html/rfc6749" target="_blank" rel="noopener">OAuth 2 specification</a> and <a href="https://indieauth.spec.indieweb.org/" target="_blank" rel="noopener">OAuth 2 IndieAuth extension</a> for generating clients. I used a long-lived access token, so that I dont have the trouble of maintaning and refreshing the token. You can refer to <a href="https://developers.home-assistant.io/docs/en/auth_api.html" target="_blank" rel="noopener">Authentication API</a> to get more information about authentication.</p>
+<p>To use WebSocket API, you have to add the <a href="https://www.home-assistant.io/components/websocket_api/" target="_blank" rel="noopener">websocket_api component</a> to your configuration.yaml file. On the remote pi, i used <a href="https://pypi.org/project/websocket-client/" target="_blank" rel="noopener">WebSocket-client</a> as a client.</p>
+<p>With  <a href="https://pypi.org/project/websocket-client/" target="_blank" rel="noopener">WebSocket-client</a>, you can first connect to <code>ws://localhost:8123/api/websocket</code>. The WebSocket API of home assistant uses JSON as the message format. So after connection, you will firstly get a <code>auth_required</code> message:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="string">"type"</span>: <span class="string">"auth_required"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>You have to send back <code>auth</code> message with  your token like this:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"type"</span>: <span class="string">"auth"</span>,</span><br><span class="line">  <span class="string">"access_token"</span>: <span class="string">"ABCDEFGHIJKLMNOPQ"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>If the authentication is successful, the server will send back <code>auth_ok</code> message like this:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"type"</span>: <span class="string">"auth_ok"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Otherwise, the server will send back <code>auth_invalid</code> message.</p>
+<p>After the connection is built and the authentication is successful, you can send command with a websocket message like this:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ws.send(json.dumps(&#123;</span><br><span class="line">                <span class="string">"id"</span>: id,</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                <span class="string">"domain"</span>: <span class="string">"light"</span>,</span><br><span class="line">                <span class="string">"service"</span>: <span class="string">"turn_off"</span>,</span><br><span class="line">                <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                <span class="string">"entity_id"</span>: <span class="string">"light.stehlampe"</span></span><br><span class="line">                &#125;</span><br><span class="line">                &#125;))</span><br></pre></td></tr></table></figure>
+<p>You can also get the status of devices with this message:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ws.send(json.dumps(&#123;</span><br><span class="line">    <span class="string">"id"</span>: id,</span><br><span class="line">    <span class="string">"type"</span>: <span class="string">"get_states"</span>,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>However, the server will send you back the status of all devices in a JSON format. You have to filter out the device you need.</p>
+<p>I used this <a href="https://github.com/keatontaylor/custom_components/blob/master/media_player/alexa.py" target="_blank" rel="noopener">interface</a> from home assistant to Alexa, so that I can use alexa as a loudspeaker to play music. Using the Text-to-Speech function, you can also use alexa to change your text into voice. You need a payload like this:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"entity_id"</span>: <span class="string">"media_player.bedroom_echo_dot"</span>, <span class="string">"message"</span>: <span class="string">"Test message"</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>I also used the function to control the a <a href="https://www.meross.com" target="_blank" rel="noopener">Meross Power strip</a>, however it was quit tricky. The meross devices don’t support home assistant yet, so you cannot use home assistant to controll them directly. However, the meross devices do support <a href="https://ifttt.com/discover" target="_blank" rel="noopener">IFTTT</a>. So you need to set the webhook in IFTTT first to turn on and off the switch. After that, you need to add an <a href="https://www.home-assistant.io/components/input_boolean/" target="_blank" rel="noopener">Input Boolean</a> and set the automation to send the request to turn on and off the switch. After that, you need to send a websocket message like below to toggle the input boolean value.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ws.send(json.dumps(&#123;</span><br><span class="line">                <span class="string">"id"</span>: id,</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                <span class="string">"domain"</span>: <span class="string">"input_boolean"</span>,</span><br><span class="line">                <span class="string">"service"</span>: <span class="string">"turn_on"</span>,</span><br><span class="line">                <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                <span class="string">"entity_id"</span>: <span class="string">"input_boolean.xmas_tree"</span></span><br><span class="line">                &#125;</span><br><span class="line">                &#125;))</span><br></pre></td></tr></table></figure>
+<p>The disadvantage of this method is that, there is always a delay by controlling with IFTTT. That’s why it took 5-10 seconds to react. Another disadvantage is that, you cannot get the status of your device easily. You can set the request to turn on the switch, but it dosen’t give you a response if it works or not.</p>
+<h2 id="4-The-Code"><a href="#4-The-Code" class="headerlink" title="4. The Code"></a>4. The Code</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> websocket</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> sense_hat <span class="keyword">import</span> SenseHat</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randint</span><br><span class="line"></span><br><span class="line">MY_TOKEN=<span class="string">"!!!Replace with the token you get!!!"</span></span><br><span class="line">sense = SenseHat()</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">import</span> thread</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    <span class="keyword">import</span> _thread <span class="keyword">as</span> thread</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">id = <span class="number">1</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line">b = (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">dark = (<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>)  <span class="comment"># blue</span></span><br><span class="line">bright = (<span class="number">255</span>, <span class="number">255</span>, <span class="number">0</span>)  <span class="comment"># yellow</span></span><br><span class="line">unconnected = (<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>)  <span class="comment"># red</span></span><br><span class="line">c=(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>) <span class="comment">#white</span></span><br><span class="line">col=(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>)</span><br><span class="line">state = <span class="string">"unknown"</span></span><br><span class="line">resultid=<span class="number">0</span></span><br><span class="line">t0=<span class="number">0</span></span><br><span class="line">partyison=<span class="keyword">False</span></span><br><span class="line">pic_makeparty_rotate=<span class="number">270</span></span><br><span class="line"><span class="comment"># Generate a random colour</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pick_random_colour</span><span class="params">()</span>:</span></span><br><span class="line">    random_red = randint(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line">    random_green = randint(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line">    random_blue = randint(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line">    <span class="keyword">return</span> (random_red, random_green, random_blue)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pic_stehlampe</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="keyword">global</span> b</span><br><span class="line">  <span class="keyword">global</span> c</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    b, c, b, b, b, b, b, b,</span><br><span class="line">    b, c, c, c, b, b, b, b,</span><br><span class="line">    b, c, c, c, c, b, b, b,</span><br><span class="line">    b, b, c, c, c, c, b, b,</span><br><span class="line">    b, b, b, c, b, b, b, b,</span><br><span class="line">    b, b, b, c, b, b, b, b,</span><br><span class="line">    b, c, c, c, c, c, b, b,</span><br><span class="line">    b, c, b, c, b, c, b, b</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pic_led</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="keyword">global</span> b</span><br><span class="line">  <span class="keyword">global</span> c</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    b, b, c, b, c, b, b, b,</span><br><span class="line">    b, b, c, c, c, b, b, b,</span><br><span class="line">    b, b, c, b, c, b, b, b,</span><br><span class="line">    b, b, c, c, c, b, b, b,</span><br><span class="line">    b, b, c, b, c, b, b, b,</span><br><span class="line">    b, b, c, c, c, b, b, b,</span><br><span class="line">    b, b, c, b, c, b, b, b,</span><br><span class="line">    b, b, c, c, c, b, b, b</span><br><span class="line">]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pic_kitchen</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="keyword">global</span> b</span><br><span class="line">  <span class="keyword">global</span> c</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    b, b, c, c, c, b, b, b,</span><br><span class="line">    b, b, b, c, b, b, b, b,</span><br><span class="line">    b, b, b, c, b, b, b, b,</span><br><span class="line">    b, c, c, c, c, c, b, b,</span><br><span class="line">    b, c, c, c, c, c, b, b,</span><br><span class="line">    b, c, c, c, c, c, b, b,</span><br><span class="line">    b, b, b, b, b, b, b, b,</span><br><span class="line">    b, b, b, b, b, b, b, b</span><br><span class="line">]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pic_xmastree</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="keyword">global</span> b</span><br><span class="line">  <span class="keyword">global</span> c</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    b, b, b, b, b, b, b, b,</span><br><span class="line">    b, b, b, c, b, b, b, b,</span><br><span class="line">    b, b, c, c, c, b, b, b,</span><br><span class="line">    b, b, b, c, b, b, b, b,</span><br><span class="line">    b, b, c, c, c, b, b, b,</span><br><span class="line">    b, c, c, c, c, c, b, b,</span><br><span class="line">    b, b, b, c, b, b, b, b,</span><br><span class="line">    b, b, b, c, b, b, b, b</span><br><span class="line">]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pic_partylight</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="keyword">global</span> b</span><br><span class="line">  <span class="keyword">global</span> c</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    b, b, b, c, c, b, b, b,</span><br><span class="line">    b, b, c, b, b, c, b, b,</span><br><span class="line">    b, c, b, b, b, b, c, b,</span><br><span class="line">    b, c, b, b, b, b, c, b,</span><br><span class="line">    b, c, b, b, b, b, c, b,</span><br><span class="line">    b, b, c, b, b, c, b, b,</span><br><span class="line">    b, b, b, c, c, b, b, b,</span><br><span class="line">    b, b, b, c, c, b, b, b</span><br><span class="line">]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pic_makeparty</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="keyword">global</span> b</span><br><span class="line">  <span class="keyword">global</span> c</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    b, b, b, b, b, b, b, b,</span><br><span class="line">    b, c, b, b, b, c, b, b,</span><br><span class="line">    b, c, c, c, c, c, b, b,</span><br><span class="line">    b, c, c, c, c, c, b, b,</span><br><span class="line">    b, b, c, c, c, b, b, b,</span><br><span class="line">    b, b, b, c, b, b, b, b,</span><br><span class="line">    b, b, b, c, b, b, b, b,</span><br><span class="line">    b, b, c, c, c, b, b, b</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pic_dragonball</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="keyword">global</span> b</span><br><span class="line">  <span class="keyword">global</span> c</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    b, b, c, c, c, c, b, b,</span><br><span class="line">    b, c, c, c, c, c, c, b,</span><br><span class="line">    c, c, c, c, c, c, c, c,</span><br><span class="line">    c, b, b, b, b, b, b, c,</span><br><span class="line">    c, b, b, b, b, b, b, c,</span><br><span class="line">    c, c, b, b, b, b, c, c,</span><br><span class="line">    b, c, c, b, b, c, c, b,</span><br><span class="line">    b, b, c, c, c, c, b, b</span><br><span class="line">]</span><br><span class="line">pic_array = [pic_stehlampe, pic_led, pic_kitchen, pic_xmastree, pic_partylight, pic_dragonball]</span><br><span class="line">id_array = [<span class="string">"light.stehlampe"</span>, <span class="string">"light.lichtsstreifen"</span>, <span class="string">"light.kuche"</span>, <span class="string">"input_boolean.xmas_tree"</span>, <span class="string">"input_boolean.party_light"</span>, <span class="string">"input_boolean.dragon_ball"</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">makeparty</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">global</span> resultid, id, partyison,i</span><br><span class="line">    partyison=<span class="keyword">True</span></span><br><span class="line">    i=<span class="number">1</span></span><br><span class="line">    ws.send(json.dumps(&#123;</span><br><span class="line">                    <span class="string">"id"</span>: id,</span><br><span class="line">                    <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                    <span class="string">"domain"</span>: <span class="string">"media_player"</span>,</span><br><span class="line">                    <span class="string">"service"</span>: <span class="string">"alexa_tts"</span>,</span><br><span class="line">                    <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                    <span class="string">"entity_id"</span>: <span class="string">"media_player.schwarz"</span>,</span><br><span class="line">    	    <span class="string">"message"</span>: <span class="string">"My dearest baby, let's have some romentic moment. Love you!"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    &#125;))</span><br><span class="line">    id+=id</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    ws.send(json.dumps(&#123;</span><br><span class="line">                    <span class="string">"id"</span>: id,</span><br><span class="line">                    <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                    <span class="string">"domain"</span>: <span class="string">"media_player"</span>,</span><br><span class="line">                    <span class="string">"service"</span>: <span class="string">"media_play"</span>,</span><br><span class="line">                    <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                    <span class="string">"entity_id"</span>: <span class="string">"media_player.schwarz"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    &#125;))</span><br><span class="line">    id+=id</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    ws.send(json.dumps(&#123;</span><br><span class="line">                    <span class="string">"id"</span>: id,</span><br><span class="line">                    <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                    <span class="string">"domain"</span>: <span class="string">"light"</span>,</span><br><span class="line">                    <span class="string">"service"</span>: <span class="string">"turn_off"</span>,</span><br><span class="line">                    <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                    <span class="string">"entity_id"</span>: <span class="string">"light.stehlampe"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    &#125;))</span><br><span class="line">    id+=id</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    ws.send(json.dumps(&#123;</span><br><span class="line">                    <span class="string">"id"</span>: id,</span><br><span class="line">                    <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                    <span class="string">"domain"</span>: <span class="string">"light"</span>,</span><br><span class="line">                    <span class="string">"service"</span>: <span class="string">"turn_off"</span>,</span><br><span class="line">                    <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                    <span class="string">"entity_id"</span>: <span class="string">"light.kuche"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    &#125;))</span><br><span class="line">    id+=id</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    ws.send(json.dumps(&#123;</span><br><span class="line">                    <span class="string">"id"</span>: id,</span><br><span class="line">                    <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                    <span class="string">"domain"</span>: <span class="string">"input_boolean"</span>,</span><br><span class="line">                    <span class="string">"service"</span>: <span class="string">"turn_on"</span>,</span><br><span class="line">                    <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                    <span class="string">"entity_id"</span>: <span class="string">"input_boolean.xmas_tree"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    &#125;))</span><br><span class="line">    id+=id</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    ws.send(json.dumps(&#123;</span><br><span class="line">                    <span class="string">"id"</span>: id,</span><br><span class="line">                    <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                    <span class="string">"domain"</span>: <span class="string">"input_boolean"</span>,</span><br><span class="line">                    <span class="string">"service"</span>: <span class="string">"turn_on"</span>,</span><br><span class="line">                    <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                    <span class="string">"entity_id"</span>: <span class="string">"input_boolean.party_light"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    &#125;))</span><br><span class="line">    id+=id</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    ws.send(json.dumps(&#123;</span><br><span class="line">                    <span class="string">"id"</span>: id,</span><br><span class="line">                    <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                    <span class="string">"domain"</span>: <span class="string">"input_boolean"</span>,</span><br><span class="line">                    <span class="string">"service"</span>: <span class="string">"turn_on"</span>,</span><br><span class="line">                    <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                    <span class="string">"entity_id"</span>: <span class="string">"input_boolean.dragon_ball"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    &#125;))</span><br><span class="line">    id+=id</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    <span class="keyword">while</span> partyison==<span class="keyword">True</span>:</span><br><span class="line">        randomcolor(ws, <span class="string">"light.lichtsstreifen"</span>)</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_state</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> resultid, id</span><br><span class="line">    ws.send(json.dumps(&#123;</span><br><span class="line">        <span class="string">"id"</span>: id,</span><br><span class="line">        <span class="string">"type"</span>: <span class="string">"get_states"</span>,</span><br><span class="line">    &#125;))</span><br><span class="line">    resultid = id</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"get state id"</span>+str(id)</span><br><span class="line">    id = id+<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pushed_left</span><span class="params">(event)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> event.action == <span class="string">"pressed"</span> <span class="keyword">and</span> partyison==<span class="keyword">False</span>:</span><br><span class="line">        <span class="keyword">global</span> i</span><br><span class="line">        <span class="keyword">global</span> resultid</span><br><span class="line">        i = i - <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> i &lt; <span class="number">0</span>:</span><br><span class="line">            i = i + len(id_array)</span><br><span class="line">        get_state()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pushed_right</span><span class="params">(event)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> event.action == <span class="string">"pressed"</span> <span class="keyword">and</span> partyison==<span class="keyword">False</span>:</span><br><span class="line">        <span class="keyword">global</span> i</span><br><span class="line">        i = i + <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> i &gt;= len(id_array):</span><br><span class="line">            i = i - len(id_array)</span><br><span class="line">        get_state()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pushed_middle</span><span class="params">(event)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> t0</span><br><span class="line">    <span class="keyword">global</span> id</span><br><span class="line">    <span class="keyword">global</span> i</span><br><span class="line">    <span class="keyword">global</span> id_array</span><br><span class="line">    <span class="keyword">global</span> partyison</span><br><span class="line"></span><br><span class="line">    partywaron=<span class="keyword">False</span></span><br><span class="line">    <span class="keyword">if</span> event.action == <span class="string">"pressed"</span>:</span><br><span class="line">    t0=time.time()</span><br><span class="line">    <span class="keyword">elif</span> event.action == <span class="string">"released"</span>:</span><br><span class="line">    t=time.time()-t0</span><br><span class="line">    <span class="keyword">print</span> t</span><br><span class="line">    <span class="keyword">if</span> t&gt;<span class="number">0.5</span>:</span><br><span class="line">        <span class="keyword">if</span> partyison==<span class="keyword">True</span>:</span><br><span class="line">    	partywaron=<span class="keyword">True</span></span><br><span class="line">    	partyison=<span class="keyword">False</span></span><br><span class="line">        pic_makeparty_rotate=<span class="number">270</span></span><br><span class="line">        i=<span class="number">0</span></span><br><span class="line">        sense.set_rotation(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> id_array:</span><br><span class="line"> 	        ws.send(json.dumps(&#123;</span><br><span class="line">      		    <span class="string">"id"</span>: id,</span><br><span class="line">        	    <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">        	    <span class="string">"domain"</span>: j[<span class="number">0</span>:j.find(<span class="string">"."</span>)],  <span class="comment">#"light",</span></span><br><span class="line">        	    <span class="string">"service"</span>: <span class="string">"turn_off"</span>,</span><br><span class="line">        	    <span class="string">"service_data"</span>: &#123;</span><br><span class="line">            	    <span class="string">"entity_id"</span>: j</span><br><span class="line">        	    &#125;</span><br><span class="line">    		    &#125;))</span><br><span class="line">		id=id+<span class="number">1</span></span><br><span class="line">	        time.sleep(<span class="number">0.5</span>)</span><br><span class="line">	    ws.send(json.dumps(&#123;</span><br><span class="line">                    <span class="string">"id"</span>: id,</span><br><span class="line">                    <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                    <span class="string">"domain"</span>: <span class="string">"media_player"</span>,</span><br><span class="line">                    <span class="string">"service"</span>: <span class="string">"media_pause"</span>,</span><br><span class="line">                    <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                    <span class="string">"entity_id"</span>: <span class="string">"media_player.schwarz"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    &#125;))</span><br><span class="line">            id+=id</span><br><span class="line">            time.sleep(<span class="number">0.5</span>)</span><br><span class="line">	    <span class="keyword">if</span> partywaron==<span class="keyword">True</span>:</span><br><span class="line">	    	ws.send(json.dumps(&#123;</span><br><span class="line">                    <span class="string">"id"</span>: id,</span><br><span class="line">                    <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">                    <span class="string">"domain"</span>: <span class="string">"media_player"</span>,</span><br><span class="line">                    <span class="string">"service"</span>: <span class="string">"alexa_tts"</span>,</span><br><span class="line">                    <span class="string">"service_data"</span>: &#123;</span><br><span class="line">                    <span class="string">"entity_id"</span>: <span class="string">"media_player.schwarz"</span>,</span><br><span class="line">                    <span class="string">"message"</span>: <span class="string">"Baby, that's enough now. Let's get back to work!"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    &#125;))</span><br><span class="line">    	    	id+=id</span><br><span class="line">    	    	time.sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">	    get_state()</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">	    ws.send(json.dumps(&#123;</span><br><span class="line">	                <span class="string">"id"</span>: id,</span><br><span class="line">	                <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">	                <span class="string">"domain"</span>: id_array[i][<span class="number">0</span>:id_array[i].find(<span class="string">"."</span>)],</span><br><span class="line">	                <span class="string">"service"</span>: <span class="string">"turn_off"</span>,</span><br><span class="line">	                <span class="string">"service_data"</span>: &#123;</span><br><span class="line">	                <span class="string">"entity_id"</span>: id_array[i]</span><br><span class="line">	                &#125;</span><br><span class="line">	                &#125;))</span><br><span class="line">	    id=id+<span class="number">1</span></span><br><span class="line">	    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">	    get_state()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">randomcolor</span><span class="params">(ws, lightid)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> id</span><br><span class="line">    <span class="keyword">global</span> c</span><br><span class="line">    random_red = randint(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line">    random_green = randint(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line">    random_blue = randint(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line">    c=(random_red, random_green, random_blue)</span><br><span class="line">    ws.send(json.dumps(&#123;</span><br><span class="line">        <span class="string">"id"</span>: id,</span><br><span class="line">        <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">        <span class="string">"domain"</span>: lightid[<span class="number">0</span>:(lightid.find(<span class="string">"."</span>))], <span class="comment"># "light",</span></span><br><span class="line">        <span class="string">"service"</span>: <span class="string">"turn_on"</span>,</span><br><span class="line">        <span class="string">"service_data"</span>: &#123;</span><br><span class="line">            <span class="string">"entity_id"</span>: lightid,</span><br><span class="line">	    <span class="string">"rgb_color"</span>: [str(c[<span class="number">0</span>]),str(c[<span class="number">1</span>]),str(c[<span class="number">2</span>])]</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"toggle id "</span>+str(id)</span><br><span class="line">    id=id+<span class="number">1</span></span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    get_state()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">togglelight</span><span class="params">(ws, lightid)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> id</span><br><span class="line">    ws.send(json.dumps(&#123;</span><br><span class="line">        <span class="string">"id"</span>: id,</span><br><span class="line">        <span class="string">"type"</span>: <span class="string">"call_service"</span>,</span><br><span class="line">        <span class="string">"domain"</span>: lightid[<span class="number">0</span>:(lightid.find(<span class="string">"."</span>))],  <span class="comment">#"light",</span></span><br><span class="line">        <span class="string">"service"</span>: <span class="string">"toggle"</span>,</span><br><span class="line">        <span class="string">"service_data"</span>: &#123;</span><br><span class="line">            <span class="string">"entity_id"</span>: lightid</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"!!!!!!!!!!"</span>+lightid[<span class="number">0</span>:(lightid.find(<span class="string">"."</span>))] </span><br><span class="line">    <span class="keyword">print</span> <span class="string">"toggle id "</span>+str(id)</span><br><span class="line">    id=id+<span class="number">1</span></span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    get_state()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">showpic</span><span class="params">(i)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> pic_makeparty_rotate</span><br><span class="line">    <span class="keyword">if</span> partyison==<span class="keyword">False</span>:</span><br><span class="line">        <span class="keyword">print</span> b</span><br><span class="line">        <span class="keyword">print</span> c</span><br><span class="line">        <span class="keyword">print</span> pic_array[i]()</span><br><span class="line">        sense.set_pixels(pic_array[i]())</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">	pic_makeparty_rotate+=<span class="number">90</span></span><br><span class="line">	<span class="keyword">if</span> pic_makeparty_rotate&gt;=<span class="number">360</span>:</span><br><span class="line">	    pic_makeparty_rotate-=<span class="number">360</span></span><br><span class="line">	sense.set_rotation(pic_makeparty_rotate,redraw=<span class="keyword">False</span>)</span><br><span class="line">	sense.set_pixels(pic_makeparty())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_led_array</span><span class="params">(i)</span>:</span></span><br><span class="line">    sense.set_pixels(pic_array[i])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getrealacceleratiion</span><span class="params">(acceleration)</span>:</span></span><br><span class="line">    x = acceleration[<span class="string">'x'</span>]</span><br><span class="line">    y = acceleration[<span class="string">'y'</span>]</span><br><span class="line">    z = acceleration[<span class="string">'z'</span>]</span><br><span class="line"></span><br><span class="line">    gValq=numpy.square(x)+numpy.square(y)+numpy.square(z)<span class="number">-1</span></span><br><span class="line">    <span class="keyword">if</span> gValq&lt;=<span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> numpy.sqrt(gValq)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_message</span><span class="params">(ws, message)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">global</span> id</span><br><span class="line">    <span class="keyword">global</span> i</span><br><span class="line">    <span class="keyword">global</span> c</span><br><span class="line">    <span class="keyword">global</span> resultid</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">mainloop</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            sense.stick.direction_left=pushed_left</span><br><span class="line">            sense.stick.direction_right=pushed_right</span><br><span class="line">        	sense.stick.direction_middle=pushed_middle</span><br><span class="line">            time.sleep(<span class="number">0.2</span>)</span><br><span class="line">            acceleration = sense.get_accelerometer_raw()</span><br><span class="line">            realacceleration= getrealacceleratiion(acceleration)</span><br><span class="line">            <span class="keyword">print</span> realacceleration</span><br><span class="line">        <span class="keyword">if</span> realacceleration &gt; <span class="number">5</span>:</span><br><span class="line">    	<span class="keyword">print</span> <span class="string">"make party"</span></span><br><span class="line">    	makeparty()</span><br><span class="line">    	time.sleep(<span class="number">0.2</span>)</span><br><span class="line">            <span class="keyword">elif</span> realacceleration &gt;<span class="number">1</span>:</span><br><span class="line">    	<span class="keyword">if</span> id_array[i]==<span class="string">"light.lichtsstreifen"</span>:</span><br><span class="line">    	    randomcolor(ws,id_array[i])</span><br><span class="line">    	<span class="keyword">else</span>:</span><br><span class="line">                    togglelight(ws,id_array[i])</span><br><span class="line">                <span class="keyword">print</span> id_array[i]+<span class="string">" toggled!"</span></span><br><span class="line">                time.sleep(<span class="number">0.2</span>)</span><br><span class="line">    </span><br><span class="line">    message=json.loads(message)</span><br><span class="line">    <span class="keyword">if</span> message[<span class="string">"type"</span>]==<span class="string">"auth_required"</span>:</span><br><span class="line">        ws.send(json.dumps((&#123;</span><br><span class="line">        <span class="string">"type"</span>: <span class="string">"auth"</span>,</span><br><span class="line">         <span class="string">"access_token"</span>: MY_TOKEN</span><br><span class="line">        &#125;)))</span><br><span class="line">    <span class="keyword">elif</span> message[<span class="string">"type"</span>]==<span class="string">"auth_ok"</span>:</span><br><span class="line">        get_state()</span><br><span class="line">    thread.start_new_thread(mainloop, ())</span><br><span class="line">    <span class="keyword">elif</span> message[<span class="string">"type"</span>]==<span class="string">"auth_invalid"</span>:</span><br><span class="line">        <span class="keyword">print</span> message[<span class="string">"message"</span>]</span><br><span class="line">    <span class="keyword">elif</span> message[<span class="string">"type"</span>]==<span class="string">"result"</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"new MESSAGE!"</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"resultid "</span>+str(resultid)</span><br><span class="line">    <span class="keyword">if</span> message[<span class="string">"id"</span>]==resultid:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"STATE RECEIVED!"</span></span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> message[<span class="string">"result"</span>]:</span><br><span class="line">                <span class="keyword">if</span> item[<span class="string">"entity_id"</span>]==id_array[i]:</span><br><span class="line">                    <span class="keyword">if</span> item[<span class="string">"state"</span>]==<span class="string">"on"</span>: </span><br><span class="line">    		    <span class="keyword">if</span> <span class="string">"rgb_color"</span> <span class="keyword">in</span> item[<span class="string">"attributes"</span>]:</span><br><span class="line">    			tempcol=item[<span class="string">"attributes"</span>][<span class="string">"rgb_color"</span>]</span><br><span class="line">    			<span class="keyword">print</span> tempcol</span><br><span class="line">    			c=(tempcol[<span class="number">0</span>],tempcol[<span class="number">1</span>],tempcol[<span class="number">2</span>])</span><br><span class="line">    		    <span class="keyword">else</span>:</span><br><span class="line">    			c=bright</span><br><span class="line">    			<span class="keyword">print</span> <span class="string">"b"</span></span><br><span class="line">                            showpic(i)</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">    		    <span class="keyword">print</span> <span class="string">"OFF"</span></span><br><span class="line">                            c=dark</span><br><span class="line">                            showpic(i)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                c=unconnected</span><br><span class="line">                showpic(i)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_error</span><span class="params">(ws, error)</span>:</span></span><br><span class="line">    print(error)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_close</span><span class="params">(ws)</span>:</span></span><br><span class="line">    sense.clear()</span><br><span class="line">    print(<span class="string">"### closed ###"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_open</span><span class="params">(ws)</span>:</span></span><br><span class="line">    print(<span class="string">"connection opened"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    websocket.enableTrace(<span class="keyword">True</span>)</span><br><span class="line">    ws = websocket.WebSocket()</span><br><span class="line">    ws = websocket.WebSocketApp(<span class="string">"ws://localhost:8123/api/websocket"</span>,</span><br><span class="line">                              on_message = on_message,</span><br><span class="line">                              on_error = on_error,</span><br><span class="line">                              on_close = on_close)</span><br><span class="line">    ws.on_open = on_open</span><br><span class="line">    ws.run_forever()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/raspberry-pi-sense-hat-smart-home-remote-hassio-home-assistant-websocket-meross-phillip-hue-webhook-ifttt/" rel="tag"># raspberry pi, sense hat, smart home, remote, hassio, home assistant, websocket, meross, phillip hue, webhook, ifttt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/01/15/SenseHAT/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/01/22/玩转树莓派Sense-HAT/" rel="prev" title="玩转树莓派Sense HAT">
+                玩转树莓派Sense HAT <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Thingsjar</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:thingsjar@gmail.com" title="E-Mail &rarr; mailto:thingsjar@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Raspberry-Pi-SenseHAT-ShakeReMote"><span class="nav-number">1.</span> <span class="nav-text">Raspberry Pi + SenseHAT = ShakeReMote</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Intro"><span class="nav-number">1.1.</span> <span class="nav-text">1. Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-What-do-you-need-for-that"><span class="nav-number">1.2.</span> <span class="nav-text">2. What do you need for that:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Connection-between-Remote-Pi-and-Server-Pi"><span class="nav-number">1.3.</span> <span class="nav-text">3. Connection between Remote Pi and Server Pi</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-The-Code"><span class="nav-number">1.4.</span> <span class="nav-text">4. The Code</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Thingsjar</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  <script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item) > -1;
+    });
+    new Valine({
+      el: '#comments' ,
+      verify: false,
+      notify: false,
+      appId: 'KKH83bXpcfeMBHaDSPTEg0UU-gzGzoHsz',
+      appKey: 'X732Rn66D3o7ayrOSjHuuAFG',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+      meta:guest,
+      pageSize: '10' || 10,
+      visitor: false
+    });
+  </script>
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
