@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="Raspberry Pi + SenseHAT = ShakeReMote1. IntroNowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices,">
+  <meta name="description" content="1. IntroNowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices, such as a cleaning robot with voice.">
 <meta name="keywords" content="raspberry pi, sense hat, smart home, remote, hassio, home assistant, websocket, meross, phillip hue, webhook, ifttt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Raspberry Pi + SenseHAT = ShakeReMote">
 <meta property="og:url" content="https://www.thingsjar.com/blog/2019/01/22/Raspberry-Pi-SenseHAT-ShakeReMote/index.html">
 <meta property="og:site_name" content="Thingsjar">
-<meta property="og:description" content="Raspberry Pi + SenseHAT = ShakeReMote1. IntroNowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices,">
+<meta property="og:description" content="1. IntroNowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices, such as a cleaning robot with voice.">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-21T23:36:11.216Z">
+<meta property="og:updated_time" content="2019-01-22T00:00:52.949Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Raspberry Pi + SenseHAT = ShakeReMote">
-<meta name="twitter:description" content="Raspberry Pi + SenseHAT = ShakeReMote1. IntroNowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices,">
+<meta name="twitter:description" content="1. IntroNowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices, such as a cleaning robot with voice.">
 
 
 
@@ -352,7 +352,7 @@
                 
               
 
-              <time title="Created: 2019-01-22 00:32:55 / Modified: 00:36:11" itemprop="dateCreated datePublished" datetime="2019-01-22T00:32:55+01:00">2019-01-22</time>
+              <time title="Created: 2019-01-22 00:32:55 / Modified: 01:00:52" itemprop="dateCreated datePublished" datetime="2019-01-22T00:32:55+01:00">2019-01-22</time>
             
 
             
@@ -400,14 +400,14 @@
       
 
       
-        <h1 id="Raspberry-Pi-SenseHAT-ShakeReMote"><a href="#Raspberry-Pi-SenseHAT-ShakeReMote" class="headerlink" title="Raspberry Pi + SenseHAT = ShakeReMote"></a>Raspberry Pi + SenseHAT = ShakeReMote</h1><h2 id="1-Intro"><a href="#1-Intro" class="headerlink" title="1. Intro"></a>1. Intro</h2><p>Nowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices, such as a cleaning robot with voice. In the meanwhile, you can know the room temperature and humidity in every room using different sensors. In the near future, there won’t be any physical switches, because every devices in your home can see, hear, learn and control themselves. And based on the automation, your home life will be more convenient, energy saving and efficient.</p>
+        <h2 id="1-Intro"><a href="#1-Intro" class="headerlink" title="1. Intro"></a>1. Intro</h2><p>Nowadays, there are more and more smart devices in a modern house. You can use Alexa or Siri to control your lights, switches or other elektronic devices, such as a cleaning robot with voice. In the meanwhile, you can know the room temperature and humidity in every room using different sensors. In the near future, there won’t be any physical switches, because every devices in your home can see, hear, learn and control themselves. And based on the automation, your home life will be more convenient, energy saving and efficient.</p>
 <p>Using a Raspberry Pi and a SenseHat, I made a prototype of an interesting device, with which you can control your smart devices with a shake. It has an advantage over voice control with Alexa, especially when you cannot talk. The LED array shows the device you can control. You can personalise them by changing it with the picture you like. This remote control can recognise how hard you’ve shaked it. If you shake it lightly, it turn on or off the device you choose, or change the colour of the light. If you shake it hardly, it will start a party mode by playing you music, turning on all color lights, and showing a spining wein glass with changing colors on the display. The color of the led changes simutaniously with the color of your light stripe.</p>
 <p>Now, lets take a look how it looks like.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6SWA7YpuF9c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 
-<h2 id="2-What-do-you-need-for-that"><a href="#2-What-do-you-need-for-that" class="headerlink" title="2. What do you need for that:"></a>2. What do you need for that:</h2><p>First of all, you need a raspberry pi as a home assistant server (lets name it Server Pi) and you can connect your smart devices to the server. I used the hassio system, which has a user friendly frontend and you can add your devices and realise the automation functions with script easily. It‘s a platform, which allows many different components, so that you don’t have to worry about the compatibility of your device.</p>
+<h2 id="2-What-do-you-need-for-that"><a href="#2-What-do-you-need-for-that" class="headerlink" title="2. What do you need for that"></a>2. What do you need for that</h2><p>First of all, you need a raspberry pi as a home assistant server (lets name it Server Pi) and you can connect your smart devices to the server. I used the hassio system, which has a user friendly frontend and you can add your devices and realise the automation functions with script easily. It‘s a platform, which allows many different components, so that you don’t have to worry about the compatibility of your device.</p>
 <p>The hassio system also exposes an http API to the user. And this enables us to connect to the home assistant server and control the devices using another raspberry pi (It will be refered to as Remote Pi). To make the remote control more interesting, we add a SenseHAT to it. The senseHat is equiped with acceleration sensors and a 8x8 led array, which will be used in this project.</p>
 <h2 id="3-Connection-between-Remote-Pi-and-Server-Pi"><a href="#3-Connection-between-Remote-Pi-and-Server-Pi" class="headerlink" title="3. Connection between Remote Pi and Server Pi"></a>3. Connection between Remote Pi and Server Pi</h2><p>To send the control orders from remote to server and get the status of devices from server to remote, we need a two way connection between them. There are different way to do that, such as MQTT, http and websocket. In this project, i chose WebSocket, because its a bi-direction channel. </p>
 <p>To enable the conenction, first of all, you need an authentication to connect your application (the remote) to the server.  The home assistsant adopted the <a href="https://tools.ietf.org/html/rfc6749" target="_blank" rel="noopener">OAuth 2 specification</a> and <a href="https://indieauth.spec.indieweb.org/" target="_blank" rel="noopener">OAuth 2 IndieAuth extension</a> for generating clients. I used a long-lived access token, so that I dont have the trouble of maintaning and refreshing the token. You can refer to <a href="https://developers.home-assistant.io/docs/en/auth_api.html" target="_blank" rel="noopener">Authentication API</a> to get more information about authentication.</p>
@@ -624,7 +624,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Raspberry-Pi-SenseHAT-ShakeReMote"><span class="nav-number">1.</span> <span class="nav-text">Raspberry Pi + SenseHAT = ShakeReMote</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Intro"><span class="nav-number">1.1.</span> <span class="nav-text">1. Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-What-do-you-need-for-that"><span class="nav-number">1.2.</span> <span class="nav-text">2. What do you need for that:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Connection-between-Remote-Pi-and-Server-Pi"><span class="nav-number">1.3.</span> <span class="nav-text">3. Connection between Remote Pi and Server Pi</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-The-Code"><span class="nav-number">1.4.</span> <span class="nav-text">4. The Code</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Intro"><span class="nav-number">1.</span> <span class="nav-text">1. Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-What-do-you-need-for-that"><span class="nav-number">2.</span> <span class="nav-text">2. What do you need for that</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Connection-between-Remote-Pi-and-Server-Pi"><span class="nav-number">3.</span> <span class="nav-text">3. Connection between Remote Pi and Server Pi</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-The-Code"><span class="nav-number">4.</span> <span class="nav-text">4. The Code</span></a></li></ol></div>
             
 
           </div>
